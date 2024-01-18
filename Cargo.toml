@@ -2,9 +2,17 @@
 name = "dot-manager"
 version = "0.1.0"
 edition = "2021"
+authors = ["WithoutAName <withoutaname@withoutaname.eu>"]
+license = "MIT"
+description = "CLI Utility for easy dotfile management"
+readme = "README.md"
+homepage = "https://github.com/WithoutAName25/DotManager"
+repository = "https://github.com/WithoutAName25/DotManager"
+keywords = ["cli", "dotfiles"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 anyhow = "1.0.79"
 camino = "1.1.6"
-clap = { version = "4.4.16", features = ["derive"] }
+clap = { version = "4.4.18", features = ["derive"] }
 dirs = "5.0.1"

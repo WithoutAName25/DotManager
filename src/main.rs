@@ -9,15 +9,14 @@ use anyhow::Result;
 use camino::Utf8PathBuf;
 use clap::{arg, Parser};
 
-/// CLI utility for managing syncing of dotfiles
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Synced dotfiles location
+    /// Specify the destination folder for syncing dotfiles
     #[arg(short, long, default_value = "~/.dotfiles")]
     synced_folder: String,
 
-    /// Path to file or folder that should be synced
+    /// The file or folder path to be synced
     path: String,
 }
 
