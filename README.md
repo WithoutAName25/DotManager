@@ -1,5 +1,7 @@
 # DotManager
 
+***WARNING: This tool is currently in the experimental stage. Use at your own risk.***
+
 DotManager is a command-line tool designed to simplify the management of dotfiles on your system.
 Dotfiles are configuration files that typically start with a dot (.) and are commonly used to personalize your system environment.
 This tool helps organize and sync these dotfiles across different machines.
@@ -22,6 +24,13 @@ Once Rust is installed, you can install DotManager using the following command:
 cargo install dot-manager
 ```
 
+## Setup
+
+Run the following command to interactively generate the config file for dot-manager:
+```bash
+dot-manager setup
+```
+
 ## Usage
 
 See `dot-manager --help`.
@@ -32,7 +41,7 @@ Assuming you have a configuration file located at `~/.config/example_config`,
 you can sync it with DotManager using the following command:
 
 ```bash
-dot-manager ~/.config/example_config
+dot-manager add ~/.config/example_config
 ```
 
 This will move the example_config file or folder to ~/.dotfiles and create a symlink at the original location.

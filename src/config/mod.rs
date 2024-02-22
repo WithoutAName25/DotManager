@@ -3,7 +3,7 @@ use camino::Utf8Path;
 use serde::{Deserialize, Serialize};
 use crate::path_utils::{DotPath, get_dot_path};
 
-const CONFIG_PATH: &str = "~/.config/dotmanager/config.toml";
+const CONFIG_PATH: &str = "~/.config/dot-manager/config.toml";
 
 pub fn get_config_dot_path() -> Result<DotPath> {
     get_dot_path(&Config::default(), &CONFIG_PATH.to_string())
@@ -32,7 +32,11 @@ pub struct ConflictResolveStrategy {
 }
 
 pub fn load_config() -> Result<Config> {
-    read_config(&get_config_dot_path()?.path)
+    let config_path = get_config_dot_path()?.path;
+    if !config_path.try_exists().unwrap_or(true) {
+        return Err(Error::msg("You have to create a config file with \"dot-manager setup\" first!"))
+    }
+    read_config(&config_path)
 }
 
 pub fn read_config(file_path: &Utf8Path) -> Result<Config> {
