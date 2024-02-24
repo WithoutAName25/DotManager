@@ -5,6 +5,7 @@ use anyhow::Error;
 use camino::Utf8PathBuf;
 use crate::config::Config;
 
+#[derive(Debug)]
 pub struct DotPath {
     pub relative_to_home: String,
     pub path: Utf8PathBuf,
