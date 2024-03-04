@@ -39,13 +39,16 @@ pub fn get_dot_path(
     let home_dir = get_home_dir().ok_or(Error::msg("Couldn't detect home dir"))?;
     let path = get_absolute_path(&path, &home_dir)?;
     let synced_folder = get_absolute_path(&config.synced_folder, &home_dir)?;
-    let relative_to_home = path
-        .strip_prefix(home_dir)
-        .map_err(|_| Error::msg("failed to determine relative to home dir path"))?;
-    let path_in_synced_folder = synced_folder.join(relative_to_home);
+    let relative_to_home = if let Ok(path) = path.strip_prefix(&synced_folder) {
+        path
+    } else {
+        path
+            .strip_prefix(&home_dir)
+            .map_err(|_| Error::msg("failed to determine relative to home dir path"))?
+    };
     return Ok(DotPath {
         relative_to_home: relative_to_home.as_str().to_string(),
-        path,
-        path_in_synced_folder,
+        path: home_dir.join(relative_to_home),
+        path_in_synced_folder: synced_folder.join(relative_to_home),
     });
 }
