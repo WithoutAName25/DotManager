@@ -1,7 +1,7 @@
 use std::io;
 use std::io::Write;
 
-use anyhow::Result;
+use anyhow::{Error, Result};
 
 use crate::config::{Config, get_config_dot_path, read_config, write_config};
 use crate::path_utils::DotPath;
@@ -22,6 +22,7 @@ pub fn run_setup() -> Result<()> {
 
     write_config(if sync_config { &config_path.path_in_synced_folder } else { &config_path.path }, &current)?;
     if sync_config {
+        std::fs::create_dir_all(config_path.path.parent().ok_or(Error::msg("Could not create parent directories"))?)?;
         std::fs::remove_file(&config_path.path).unwrap_or(());
         match std::os::unix::fs::symlink(&config_path.path_in_synced_folder, &config_path.path) {
             Ok(_) => {
