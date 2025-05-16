@@ -1,5 +1,4 @@
 use clap::CommandFactory;
-use clap_complete::generate_to;
 use clap_complete::Shell::{Bash, Fish, Zsh};
 
 include!("src/args.rs");
@@ -12,17 +11,14 @@ fn main() -> std::io::Result<()> {
     let completions_dir = generated_path.join("completions");
     std::fs::create_dir_all(&completions_dir)?;
     
-    generate_to(Bash, &mut cmd, "dot-manager", &completions_dir)?;
-    generate_to(Fish, &mut cmd, "dot-manager", &completions_dir)?;
-    generate_to(Zsh, &mut cmd, "dot-manager", &completions_dir)?;
+    clap_complete::generate_to(Bash, &mut cmd, "dot-manager", &completions_dir)?;
+    clap_complete::generate_to(Fish, &mut cmd, "dot-manager", &completions_dir)?;
+    clap_complete::generate_to(Zsh, &mut cmd, "dot-manager", &completions_dir)?;
     
     let manpage_dir = generated_path.join("manpage");
     std::fs::create_dir_all(&manpage_dir)?;
     
-    let man = clap_mangen::Man::new(cmd);
-    let mut buffer: Vec<u8> = Default::default();
-    man.render(&mut buffer)?;
-    std::fs::write(manpage_dir.join("dot-manager.1"), buffer)?;
+    clap_mangen::generate_to(cmd, manpage_dir)?;
     
     Ok(())
 }
