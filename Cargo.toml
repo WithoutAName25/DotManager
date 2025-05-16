@@ -11,10 +11,20 @@ repository = "https://github.com/WithoutAName25/DotManager"
 keywords = ["cli", "dotfiles"]
 categories = ["command-line-utilities"]
 
+[features]
+default = ["completions"]
+completions = ["clap_complete"]
+
 [dependencies]
 anyhow = "1.0.80"
 camino = "1.1.6"
 clap = { version = "4.5.1", features = ["derive"] }
-dirs = "5.0.1"
+clap_complete = { version = "4.5.50", optional = true }
+dirs = "6.0.0"
 serde = { version = "1.0.197", features = ["derive"] }
 toml = "0.8.10"
+
+[build-dependencies]
+clap = {version = "4.5.1", features = ["derive"]}
+clap_complete = "4.5.50"
+clap_mangen = "0.2.26"
